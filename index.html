@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Returning to Finance Tracker</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #121412;
+    color: #F2F3F1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 24px;
+    text-align: center;
+  }
+  .card { max-width: 360px; }
+  h1 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+  p { font-size: 14px; color: #9AA39A; line-height: 1.5; }
+  a.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: #2E7D32;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 24px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="title">Returning to Finance Tracker&hellip;</h1>
+    <p id="message">Completing your bank connection.</p>
+    <a class="button" id="manualLink" href="#">Open Finance Tracker</a>
+  </div>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var target = "financetracker://enablebanking-callback?" + params.toString();
+
+      var manualLink = document.getElementById("manualLink");
+      manualLink.href = target;
+
+      if (params.has("error")) {
+        document.getElementById("title").textContent = "Connection failed";
+        document.getElementById("message").textContent =
+          params.get("error_description") || params.get("error") || "Something went wrong.";
+      }
+
+      window.location.replace(target);
+    })();
+  </script>
+</body>
+</html>
